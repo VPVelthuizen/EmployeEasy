@@ -1,4 +1,3 @@
-// Command line prompt- view all departments, view all roles, view all employees, add department, add a role, add an employee, update an employee
 // View all dep- table showing dep names and ids
 // View all roles- table showing job title, role id, department it belongs to, salary
 // View all employees- table with employee data, first last names, id, job title, dep, salary, managers
@@ -10,3 +9,28 @@
 // 3 tables- department (id,name)
 // role (id, title, salary, department_id)
 // employee- (id, first name, last, role id, manager id)
+const inquirer = require('inquirer');
+
+// Ask the user to describe the logo
+inquirer.prompt(
+    { type: 'list', message: 'What would you like to do or see?', name: 'choice', choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee'] })
+
+// Use what they entered to create the logo
+    .then((response) => {
+        let newShape;
+        console.log(response.choice)
+        // switch (response.shape) {
+        //     case 'Square':
+        //         newShape = new shapes.Square();
+        //         break;
+        //     case 'Circle':
+        //         newShape = new shapes.Circle();
+        //         break;
+        //     case 'Triangle':
+        //         newShape = new shapes.Triangle();
+        //         break;
+        //     default:
+        //         console.log('Invalid shape selected');
+        //         return;
+        // }
+    });
