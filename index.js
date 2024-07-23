@@ -10,45 +10,46 @@
 // role (id, title, salary, department_id)
 // employee- (id, first name, last, role id, manager id)
 const inquirer = require('inquirer');
-const express = require('express');
-const sequelize = require('./config/connection');
+const pool = require('./db');
 
-// Import model to sync table with database
-const Departments = require('./models/departments.js');
-const Roles = require('./models/roles.js');
-const Employees = require('./models/employees.js');
+async function options() {
+    const { prompt } = await inquirer.prompt([
+        {
+            type: "list", name: "prompt", message: "Choose an option!",
+            choices: [
+                "View all employees",
+                "Add an employee",
+                "Update an employee",
+                "View all roles",
+                "Add new role",
+                "View all departments",
+                "Add a new department"
+            ],
+        },
+    ]);
 
-const app = express();
-const PORT = process.env.PORT || 3001;
+}
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// // Ask the user to describe the logo
+// inquirer.prompt(
+//     { type: 'list', message: 'What would you like to do or see?', name: 'choice', choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee'] })
 
-// Force true to drop/recreate table(s) on every sync
-sequelize.sync({ force: true }).then(() => {
-  app.listen(PORT, () => console.log('Now listening'));
-});
-
-// Ask the user to describe the logo
-inquirer.prompt(
-    { type: 'list', message: 'What would you like to do or see?', name: 'choice', choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee'] })
-
-// Use what they entered to create the logo
-    .then((response) => {
-        let newShape;
-        console.log(response.choice)
-        // switch (response.shape) {
-        //     case 'Square':
-        //         newShape = new shapes.Square();
-        //         break;
-        //     case 'Circle':
-        //         newShape = new shapes.Circle();
-        //         break;
-        //     case 'Triangle':
-        //         newShape = new shapes.Triangle();
-        //         break;
-        //     default:
-        //         console.log('Invalid shape selected');
-        //         return;
-        // }
-    });
+// // Use what they entered to create the logo
+//     .then((response) => {
+//         let newShape;
+//         console.log(response.choice)
+//         // switch (response.shape) {
+//         //     case 'Square':
+//         //         newShape = new shapes.Square();
+//         //         break;
+//         //     case 'Circle':
+//         //         newShape = new shapes.Circle();
+//         //         break;
+//         //     case 'Triangle':
+//         //         newShape = new shapes.Triangle();
+//         //         break;
+//         //     default:
+//         //         console.log('Invalid shape selected');
+//         //         return;
+//         // }
+//     });
