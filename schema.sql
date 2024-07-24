@@ -1,11 +1,11 @@
 -- Create the department table
-CREATE TABLE department (
+CREATE TABLE departments (
     id SERIAL PRIMARY KEY,
     name VARCHAR(30) UNIQUE NOT NULL
 );
 
 -- Create the role table
-CREATE TABLE role (
+CREATE TABLE roles (
     id SERIAL PRIMARY KEY,
     title VARCHAR(30) UNIQUE NOT NULL,
     salary DECIMAL NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE role (
 );
 
 -- Create the employee table
-CREATE TABLE employee (
+CREATE TABLE employees (
     id SERIAL PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
