@@ -3,7 +3,7 @@ const pool = require('./db');
 
 async function allEmp() {
     const res = await pool.query("SELECT * FROM employees");
-    console.table(res.command.rows);
+    console.table(res.rows);
     options()
 };
 
@@ -24,15 +24,10 @@ async function newEmp() {
             name: 'roleId',
             message: 'Enter the role ID of the employee:',
         },
-        {
-            type: 'input',
-            name: 'managerId',
-            message: 'Enter the manager ID of the employee:',
-        },
     ]);
 
-    const query = 'INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ($1, $2, $3, $4) RETURNING *';
-    const values = [employeeData.firstName, employeeData.lastName, employeeData.roleId, employeeData.managerId];
+    const query = 'INSERT INTO employees (first_name, last_name, role_id) VALUES ($1, $2, $3) RETURNING *';
+    const values = [employeeData.firstName, employeeData.lastName, employeeData.roleId];
 
     try {
         const res = await pool.query(query, values);
@@ -150,8 +145,8 @@ async function options() {
     ]);
 
     switch (prompt) {
-        case "View all Employees":
-            return allEmp();
+        case "View all employees":
+            allEmp();
         case "Add an employee":
             return newEmp();
         case "Update an employee":
