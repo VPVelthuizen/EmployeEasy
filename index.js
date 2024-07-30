@@ -1,12 +1,14 @@
 const inquirer = require('inquirer');
 const pool = require('./db');
 
+// Return all employees
 async function allEmp() {
     const res = await pool.query("SELECT * FROM employees");
     console.table(res.rows);
     options()
 };
 
+// Create a new employee
 async function newEmp() {
     const employeeData = await inquirer.prompt([
         {
@@ -38,6 +40,7 @@ async function newEmp() {
     options();
 }
 
+// Update an employee
 async function updateEmp() {
     const employeeData = await inquirer.prompt([
         {
