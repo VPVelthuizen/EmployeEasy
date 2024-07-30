@@ -34,41 +34,43 @@ async function newEmp() {
         console.log('New employee added:', res.rows[0]);
     } catch (error) {
         console.error('Error adding employee:', error);
-    }
+    };
+    options();
 }
 
 async function updateEmp() {
     const employeeData = await inquirer.prompt([
         {
-          type: 'input',
-          name: 'employeeId',
-          message: 'Enter the ID of the employee you want to update:',
+            type: 'input',
+            name: 'employeeId',
+            message: 'Enter the ID of the employee you want to update:',
         },
         {
-          type: 'input',
-          name: 'updatedRoleId',
-          message: 'Enter the new role ID for the employee:',
+            type: 'input',
+            name: 'updatedRoleId',
+            message: 'Enter the new role ID for the employee:',
         },
-      ]);
-    
-      const query = 'UPDATE employees SET role_id = $1 WHERE id = $2 RETURNING *';
-      const values = [employeeData.updatedRoleId, employeeData.employeeId];
-    
-      try {
+    ]);
+
+    const query = 'UPDATE employees SET role_id = $1 WHERE id = $2 RETURNING *';
+    const values = [employeeData.updatedRoleId, employeeData.employeeId];
+
+    try {
         const res = await pool.query(query, values);
         if (res.rowCount > 0) {
-          console.log('Employee role updated successfully.');
+            console.log('Employee role updated successfully.');
         } else {
-          console.log('Employee not found or role not updated.');
+            console.log('Employee not found or role not updated.');
         }
-      } catch (error) {
+    } catch (error) {
         console.error('Error updating employee role:', error);
-      }
+    };
+    options();
 }
 
 async function allRoles() {
     const res = await pool.query("SELECT * FROM roles");
-    console.table(res.command.rows);
+    console.table(res.rows);
     options()
 }
 
@@ -100,11 +102,12 @@ async function newRole() {
     } catch (error) {
         console.error('Error adding role:', error);
     }
+    options();
 }
 
 async function allDep() {
     const res = await pool.query("SELECT * FROM departments");
-    console.table(res.command.rows);
+    console.table(res.rows);
     options()
 }
 
@@ -125,7 +128,8 @@ async function newDep() {
         console.log('New department added:', res.rows[0]);
     } catch (error) {
         console.error('Error adding department:', error);
-    }
+    };
+    options();
 }
 
 async function options() {
@@ -147,18 +151,40 @@ async function options() {
     switch (prompt) {
         case "View all employees":
             allEmp();
+            break;
         case "Add an employee":
-            return newEmp();
+            newEmp();
+            break;
         case "Update an employee":
-            return updateEmp();
+            updateEmp();
+            break;
+        case "View all employees":
+            allEmp();
+            break;
+        case "Add an employee":
+            newEmp();
+            break;
+        case "Update an employee":
+            updateEmp();
+            break;
         case "View all roles":
-            return allRoles();
+            allRoles();
+            break;
         case "Add new role":
-            return newRole();
+            newRole();
+            break;
         case "View all departments":
-            return allDep();
+            allDep();
+            break;
         case "Add a new department":
-            return newDep();
+            newDep();
+            break;
+        case "Add new role":
+            newRole();
+        case "View all departments":
+            allDep();
+        case "Add a new department":
+            newDep();
     }
 };
 
